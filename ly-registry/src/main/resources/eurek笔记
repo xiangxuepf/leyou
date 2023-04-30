@@ -1,0 +1,18 @@
+1. https://www.jianshu.com/p/2ca32773b3e5 集群
+1.1 eureka.client.region=region2 //相当于定义一个集群名称 叫region2
+1.2 eureka.client.availability-zones.region2=zone2-2,zone2-1   //集群里面的实例有 zone2-1, zone2-2
+1.3 eureka的preferSameZoneEureka默认为true，类似Session Affinity，优先选择client实例所在的zone的服务。
+
+2. https://www.cnblogs.com/ibethfy/p/9591762.html
+2.1 eureka server清理无效节点的时间间隔，默认60000毫秒，即60秒
+3. https://www.jianshu.com/p/886947b52cb4
+3.1 eureka.instance.prefer-is-address 为true时，注册到eureka server上的是ip，若为false则注册到的为机器的主机名.
+3.2 此时就可以看到如果设置eureka.instance.prefer-ip-address为false时，那么注册到Eureka中的Ip地址就是本机的Ip地址。
+如果设置了true并且也设置了eureka.instance.ip-address那么就将此ip地址注册到Eureka中
+
+4. https://blog.csdn.net/neosmith/article/details/70749615
+4.1 eureka.client.availabilityZones.beijing=myzone # beijing是region
+5. https://blog.csdn.net/bigtree_3721/article/details/101175258
+默认情况下，Eureka 使用 hostname 进行服务注册，以及服务信息的显示，那如果我们使用 IP 地址的方式，该如何配置呢？
+答案就是eureka.instance.prefer-ip-address=true。配置eureka.instance.prefer-ip-address = true 就可以将IP注册到Eureka Server上，而如果不配置就是机器的主机名。
+给Eureka.instance.ip-address设置了IP, 并且同时设置　eureka.instance.prefer-ip-address = true，则服务提供者就用你指定的IP去注册！在eureka server的GUI上显示的是你指定的ip.

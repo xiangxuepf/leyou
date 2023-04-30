@@ -1,0 +1,32 @@
+server:
+  port: 8089
+
+spring:
+  application:
+    name: order-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/leyou2?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: root
+  jackson:
+    default-property-inclusion: non_null #一直以来我们都是用RestController返回json, 属性为NULL时不序列化,即不返回;
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+    registry-fetch-interval-seconds: 5 #表示eureka client间隔多久去拉取服务注册信息，默认为30秒
+  instance:
+    prefer-ip-address: true #将自动获取的IP地址注册到eureka
+    ip-address: 127.0.0.1 #当同时设置了ip-address时，以ip-address为准；https://www.jianshu.com/p/886947b52cb4
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  type-aliases-package: com.leyou.order.pojo # 使用type-aliases-package中指定entity扫描包类让mybatis自定扫描到自定义的entity
+leyou:
+  jwt:
+    pubKeyPath: C:\\tmp\\rsa\\rsa.pub # 公钥地址
+    cookieName: LY_TOKEN
+  worker:
+    workerId: 1
+    datacenterId: 1

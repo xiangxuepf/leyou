@@ -1,0 +1,30 @@
+1.https://www.cnblogs.com/wpcnblog/p/9054837.html
+1.1 post filter 出异常，则执行 error filter , 然后无返回到前端 Http Response;
+
+2. 拦截器与过滤器的区别.mhtml
+
+3. https://www.cnblogs.com/hellxz/p/9282756.html  路由配置
+3.1 zuul 默认会为Eureka中的每个服务  创建 默认路由，如下
+    upload-service: # 路由名 叫 upload-service;
+      path: /upload-service/**
+      serviceId: upload-service
+3.2 使用 zuul.ignored-services  Zuul将跳过此服务，不为其创建默认路由 。
+
+4. https://blog.csdn.net/u010953880/article/details/102977884
+4.1 局部配置 strip-prefix: 不移除局部变量的前缀，即是 路由 upload-service 的 path
+    upload-service: # 路由名 叫 upload-service;
+      path: /upload-service/**
+      serviceId: upload-service
+      strip-prefix: true
+
+4.2 局部
+      strip-prefix: true #要移除局部变量的前缀 upload-service;
+       这样转发到 uploadservice服务时的路径是：localhost:8082/upload/image,
+       而不是 localhost:8082/upload-service/upload/image;
+
+5. 过滤头信息
+    https://blog.csdn.net/lindan1984/article/details/79308396?utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.baidujs&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.baidujs
+    sensitiveHeaders的默认值初始值是"Cookie", "Set-Cookie", "Authorization"这三项，可以看到Cookie被列为了敏感信息，所以不会放到新header中。
+    5.1 https://blog.csdn.net/dengzhuineng7792/article/details/101243159
+
+6. 还可以查看 乐优商城-黑科技

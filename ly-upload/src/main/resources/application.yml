@@ -1,0 +1,19 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: upload-service
+
+  servlet:
+    multipart:
+      max-file-size: 5MB #限制文件上传大小;
+#      max-request-size:  10MB 一次请求的大小
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+  instance:
+    prefer-ip-address: true #将自动获取的IP地址注册到eureka
+    ip-address: 127.0.0.1 #当同时设置了ip-address时，以ip-address为准；https://www.jianshu.com/p/886947b52cb4

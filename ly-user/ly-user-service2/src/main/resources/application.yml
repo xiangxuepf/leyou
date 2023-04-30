@@ -1,0 +1,27 @@
+server:
+  port: 8088
+
+spring:
+  application:
+    name: user2-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/leyou2?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: root
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+  instance:
+    prefer-ip-address: true #将自动获取的IP地址注册到eureka
+    ip-address: 127.0.0.1 #当同时设置了ip-address时，以ip-address为准；https://www.jianshu.com/p/886947b52cb4
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  type-aliases-package: com.leyou.item.pojo
+#    spring.http.encoding.force=true
+#    spring.http.encoding.charset=UTF-8
+#    spring.http.encoding.enabled=true
+#    server.tomcat.uri-encoding=UTF-8

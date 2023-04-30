@@ -1,0 +1,54 @@
+server:
+  port: 10010
+spring:
+  application:
+    name: api-gateway
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+zuul:
+  prefix: /api #添加路由前缀
+  routes:
+    item-service: /item/**
+    search-service: /search/**
+    user-service: /user/**
+    auth-service: /auth/**
+    cart-service: /cart/**
+    order-service: /order/**
+    upload-service: # 路由名 叫 upload-service;
+      path: /upload/**
+      serviceId: upload-service
+      strip-prefix: false #代理前缀默认会从请求路径中移除，通过该设置关闭移除功能；设置为false，则不会去除前缀；这里的前缀是局部变量的前缀 upload;
+      # 明确前提 路由转发给 upload-service微服务时 的路由是 /upload/image;
+      # 设置为false则不会去除前缀，还是/upload/image ，如果是true则会去除前缀 以 /image 进入服务，则是找不到controller的；
+
+  #ignored-services: "item-service,search-service"  # 不给这两服务创建默认路由 一般都是要创建的;
+  add-host-header: true  #转发时携带地址头信息; 默认转发不携带头信息;
+  sensitive-headers:  # 覆盖敏感头信息，使cookie可以正常写入; zuul转发请求时，默认是不携带敏感头信息;
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000 #熔断超时时长
+ribbon: # 是在 AbstractRibbonCommand 类里面配置；
+  ConnectTimeout: 1000 #ribbon链接超时时长
+  ReadTimeout: 3500 #ribbon读取超时时长
+  MaxAutoRetries: 0 #当前服务重试次数，重试可能导致一些问题，故不重试，比如新增操作，重试就会新增多次；
+  MaxAutoRetriesNextServer: 0 #切换服务重试次数
+
+leyou:
+  jwt:
+    pubKeyPath: C:\\tmp\\rsa\\rsa.pub # 公钥地址
+    cookieName: LY_TOKEN
+  filter:
+    allowPaths:
+      - /api/auth  # 登录校验接口
+      - /api/search # 搜索接口
+      - /api/user/register # 注册接口
+      - /api/user/check  # 数据校验接口
+      - /api/user/code # 发送验证码接口
+      - /api/item  # 跟商品相关的查询接口 不拦截

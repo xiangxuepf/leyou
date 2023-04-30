@@ -1,0 +1,41 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: item-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/leyou2?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: root
+  rabbitmq:
+    host: 127.0.0.1
+    username: leyou
+    password: leyou
+    virtual-host: /leyou
+    template: #有关`AmqpTemplate`的配置
+      retry: #失败重试
+        enabled: true #开启失败重试
+        initial-interval: 10000 #第一次重试的间隔时长
+        max-interval: 30000 #最长重试间隔，超过这个间隔将不再重试
+        multiplier: 2 #下次重试间隔的倍数，此处是2即下次重试间隔是上次的2倍
+      exchange: ly.item.exchange #缺省的交换机名称，此处配置后，发送消息如果不指定交换机就会使用这个
+    publisher-confirms: true #生产者确认机制，确保消息会正确发送，如果发送失败会有错误回执，从而触发重试
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+    registry-fetch-interval-seconds: 5 #表示eureka client间隔多久去拉取服务注册信息，默认为30秒
+  instance:
+    prefer-ip-address: true #将自动获取的IP地址注册到eureka
+    ip-address: 127.0.0.1 #当同时设置了ip-address时，以ip-address为准；https://www.jianshu.com/p/886947b52cb4
+    # https://blog.csdn.net/bigtree_3721/article/details/101175258
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+#    spring.http.encoding.force=true
+#    spring.http.encoding.charset=UTF-8
+#    spring.http.encoding.enabled=true
+#    server.tomcat.uri-encoding=UTF-8
